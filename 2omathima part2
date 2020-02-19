@@ -1,0 +1,46 @@
+def get_char(text,pos):
+	if pos<0 or pos>=len(text):
+		return None
+	c=text[pos] 
+	if c>='0'and c<='9':
+		return 'digit'
+	return c	
+
+def scan(text,transitions,accepts,start):
+	pos=0
+	state=start
+	while True: #gia panta
+		c=get_char(text,pos)
+		if state in transitions and c in transitions[state]:
+			state=transitions[state][c]
+			pos+=1
+		else:
+			if state in accepts:
+				return {'token':accepts[state],
+					'lexeme':text[:pos]
+					}
+			return None
+
+
+
+
+
+
+
+
+
+
+
+transitions={'s0':{'digit':'s1'},
+	     's1':{'digit':'s1'}
+	     }
+
+
+accepts={'s1':'num_token'
+	}
+
+
+text=input ('>')
+m=scan (text,transitions,accepts,'s0')
+print(m)
+
